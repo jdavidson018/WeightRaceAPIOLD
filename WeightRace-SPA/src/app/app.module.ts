@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { AuthService } from './_services/auth.service';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
+import { BarChartDemoComponent } from './barChartDemo/barChartDemo.component';
 
 @NgModule({
    declarations: [
@@ -19,18 +21,20 @@ import { AlertifyService } from './_services/alertify.service';
       ValueComponent,
       HomeComponent,
       NavComponent,
-      RegisterComponent
+      RegisterComponent,
+      BarChartDemoComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ChartsModule,
       BsDropdownModule.forRoot()
    ],
    providers: [
-    AuthService,
-    ErrorInterceptorProvider,
-    AlertifyService
+      AuthService,
+      ErrorInterceptorProvider,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent
