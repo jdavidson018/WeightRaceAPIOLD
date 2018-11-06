@@ -10,6 +10,7 @@ using WeightRace.API.Data;
 using WeightRace.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using WeightRace.API.Dtos;
+using AutoMapper;
 
 namespace WeightRace.API.Controllers
 {
@@ -18,10 +19,12 @@ namespace WeightRace.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
-        private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IConfiguration _config;        
+        private readonly IMapper _mapper;
+         public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _config = config;
+            _mapper = mapper;
             _repo = repo;
         }
          [HttpPost("register")]
@@ -59,8 +62,12 @@ namespace WeightRace.API.Controllers
             };
              var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-             return Ok(new {
-                token = tokenHandler.WriteToken(token)
+
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+            return Ok(new {
+                token = tokenHandler.WriteToken(token),
+                user
             });
         }
     }
