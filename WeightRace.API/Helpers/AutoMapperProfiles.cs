@@ -27,6 +27,8 @@ namespace WeightRace.API.Helpers
             CreateMap<Photo, PhotoForReturnDto>();
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForRegisterDto, User>();
+            CreateMap<WeightForReturnDto, Weight>();
+            CreateMap<WeightForCreationDto, Weight>();
         }
     }
 } 

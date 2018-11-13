@@ -33,6 +33,10 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
+// import { WeightsComponent } from './weights/weights.component';
+import { ProgressComponent } from './userprogress/progress/progress.component';
+import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
+import { ProgressResolver } from './_resolvers/progress.resolver';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -53,7 +57,10 @@ export function tokenGetter() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+    //   WeightsComponent,
+      ProgressComponent,
+      SingleusergraphComponent
    ],
    imports: [
       BrowserModule,
@@ -68,11 +75,11 @@ export function tokenGetter() {
       NgxGalleryModule,
       FileUploadModule,
       JwtModule.forRoot({
-          config: {
-              tokenGetter: tokenGetter,
-              whitelistedDomains: ['localhost:5000'],
-              blacklistedRoutes: ['localhost:5000/api/auth']
-          }
+        config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth']
+        }
       })
    ],
    providers: [
@@ -84,6 +91,7 @@ export function tokenGetter() {
       MemberDetailResolver,
       MemberListResolver,
       MemberEditResolver,
+      ProgressResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [

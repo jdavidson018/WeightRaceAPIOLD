@@ -1,4 +1,5 @@
 import { Photo } from './photo';
+import { Weight } from './weight';
  export interface User {
     id: number;
     username: string;
@@ -14,4 +15,5 @@ import { Photo } from './photo';
     introduction?: string;
     lookingFor?: string;
     photos?: Photo[];
+    weights?: Weight[];
 }
