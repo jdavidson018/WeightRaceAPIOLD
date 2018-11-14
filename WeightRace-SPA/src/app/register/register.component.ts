@@ -58,6 +58,6 @@ export class RegisterComponent implements OnInit {
     }
   }
    cancel() {
-    this.cancelRegister.emit(false);
+    this.cancelRegister.emit(this.user);
   }
 }

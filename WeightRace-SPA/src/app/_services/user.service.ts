@@ -3,6 +3,8 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
+import { Weight } from '../_models/weight';
+import { identifierModuleUrl } from '@angular/compiler';
  @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +18,11 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
   updateUser(id: number, user: User) {
-    return this.http.put(this.baseUrl + 'users/' + id, user);
+    return this.http.put(this.baseUrl + 'users/' + id, user, {});
+  }
+
+  addWeight(userId: number, weight: Weight) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/weights/', weight);
   }
 
   deleteWeight(userId: number, id: number) {

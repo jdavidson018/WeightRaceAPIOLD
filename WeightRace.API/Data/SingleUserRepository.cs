@@ -35,7 +35,8 @@ namespace WeightRace.API.Data
 
         public async Task<User> GetUser(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.Include(p => p.Photos).Include(w => w.Weights).FirstOrDefaultAsync(u => u.Id == id);
+            return user;
         }
 
         public async Task<IEnumerable<User>> GetUsers()

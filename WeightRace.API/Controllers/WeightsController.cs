@@ -11,10 +11,10 @@ using WeightRace.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace WeightRace.API.Controllers
 {
-    [Authorize]
     [Route("api/users/{userId}/weights")]
     [ApiController]
     public class WeightsController : ControllerBase
@@ -27,6 +27,16 @@ namespace WeightRace.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetWeights(int userId)
+        {
+            var user = await _repo.GetUser(userId);
+
+            user.Weights = user.Weights.OrderBy(d => d.Date).ToList();
+            ICollection<WeightForReturnDto> weightsToReturn = user.Weights.Select(x => _mapper.Map<WeightForReturnDto>(x)).ToList();
+            return Ok(weightsToReturn);
+        }
+
         [HttpGet("{id}", Name = "GetWeight")]
         public async Task<IActionResult> GetWeight(int id){
             var weightFromRepo = await _repo.GetWeight(id);
@@ -35,7 +45,7 @@ namespace WeightRace.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWeightForUser(int userId, [FromForm]WeightForCreationDto weightForCreation){
+        public async Task<IActionResult> AddWeightForUser(int userId, WeightForCreationDto weightForCreation){
             var userFromRepo = await _repo.GetUser(userId);
             var weight = _mapper.Map<Weight>(weightForCreation);
             userFromRepo.Weights.Add(weight);

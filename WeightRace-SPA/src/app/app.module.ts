@@ -37,6 +37,7 @@ import {TimeAgoPipe} from 'time-ago-pipe';
 import { ProgressComponent } from './userprogress/progress/progress.component';
 import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
 import { ProgressResolver } from './_resolvers/progress.resolver';
+import { AddweightComponent } from './addweight/addweight.component';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -58,9 +59,9 @@ export function tokenGetter() {
       MemberEditComponent,
       PhotoEditorComponent,
       TimeAgoPipe,
-    //   WeightsComponent,
       ProgressComponent,
-      SingleusergraphComponent
+      SingleusergraphComponent,
+      AddweightComponent
    ],
    imports: [
       BrowserModule,
@@ -80,8 +81,8 @@ export function tokenGetter() {
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost:5000/api/auth']
         }
-      })
-   ],
+        })
+    ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,

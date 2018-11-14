@@ -8,7 +8,6 @@ namespace WeightRace.API.Dtos
         public DateTime Date { get; set; }
 
         public WeightForCreationDto(){
-            Date = DateTime.Now;
         }
     }
 }
