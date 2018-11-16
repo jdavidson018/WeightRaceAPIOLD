@@ -10,7 +10,6 @@
           <div class="invalid-feedback" *ngIf="addWeightForm.get('value').touched && addWeightForm.get('value').hasError('required')">Weight is required</div>
       </div>
       <div class="form-group text-center">
-          <button class="btn btn-success" [disabled]="!addWeightForm.valid" (click)="update()" type="submit">Register</button>
-          <button class="btn btn-default" type="button" >Cancel</button>
+          <button class="btn btn-success" [disabled]="!addWeightForm.valid" (click)="update()" type="submit">Submit</button>
         </div>
 </form> 

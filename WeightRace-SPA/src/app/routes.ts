@@ -10,9 +10,9 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
-import { ProgressComponent } from './userprogress/progress/progress.component';
 import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
 import { ProgressResolver } from './_resolvers/progress.resolver';
+import { GraphResolver } from './_resolvers/graph.resolver';
  export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
     {
@@ -25,7 +25,7 @@ import { ProgressResolver } from './_resolvers/progress.resolver';
             { path: 'member/edit', component: MemberEditComponent,
                 resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChanges] },
             { path: 'messages', component: MessagesComponent},
-            { path: 'progress', component: SingleusergraphComponent, resolve: {user: ProgressResolver}},
+            { path: 'progress', component: SingleusergraphComponent, resolve: {user: ProgressResolver, weights: GraphResolver}},
             { path: 'lists', component: ListsComponent},
         ]
     },

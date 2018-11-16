@@ -34,10 +34,11 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
 // import { WeightsComponent } from './weights/weights.component';
-import { ProgressComponent } from './userprogress/progress/progress.component';
 import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
 import { ProgressResolver } from './_resolvers/progress.resolver';
-import { AddweightComponent } from './addweight/addweight.component';
+import { AddweightComponent } from './userprogress/addweight/addweight.component';
+import { GraphResolver } from './_resolvers/graph.resolver';
+import { WeighttableComponent } from './userprogress/weighttable/weighttable.component';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -59,9 +60,9 @@ export function tokenGetter() {
       MemberEditComponent,
       PhotoEditorComponent,
       TimeAgoPipe,
-      ProgressComponent,
       SingleusergraphComponent,
-      AddweightComponent
+      AddweightComponent,
+      WeighttableComponent
    ],
    imports: [
       BrowserModule,
@@ -93,6 +94,7 @@ export function tokenGetter() {
       MemberListResolver,
       MemberEditResolver,
       ProgressResolver,
+      GraphResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [

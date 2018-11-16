@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../../_services/auth.service';
 import { Router } from '@angular/router';
-import { AlertifyService } from '../_services/alertify.service';
+import { AlertifyService } from '../../_services/alertify.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
-import { Weight } from '../_models/weight';
-import { UserService } from '../_services/user.service';
+import { Weight } from '../../_models/weight';
+import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'app-addweight',
@@ -46,11 +46,10 @@ export class AddweightComponent implements OnInit {
     if (this.addWeightForm.valid) {
       this.weight = Object.assign({}, this.addWeightForm.value);
       this.userService.addWeight(this.authService.decodedToken.nameid, this.weight).subscribe(() => {
-        this.router.navigate(['/members']);
       }, error => {
         this.alertify.error(error);
       }, () => {
-        this.router.navigate(['/progress']);
+        window.location.reload();
       });
     }
   }

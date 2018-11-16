@@ -8,6 +8,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { componentRefresh } from '@angular/core/src/render3/instructions';
 import { Weight } from 'src/app/_models/weight';
+import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-singleusergraph',
@@ -16,6 +18,7 @@ import { Weight } from 'src/app/_models/weight';
 })
 export class SingleusergraphComponent implements OnInit {
   user: User;
+  weights: Weight[];
   weightForm: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
   public lineChartOptions: any = {
@@ -34,13 +37,14 @@ export class SingleusergraphComponent implements OnInit {
     private userService: UserService, private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.user = data['user'];
+      this.weights = data['weights'];
+    });
     this.bsConfig = {
       containerClass: 'theme-red'
     },
     this.createWeightForm();
-    this.route.data.subscribe(data => {
-      this.user = data['user'];
-    });
     this.setupLineChart();
   }
 
@@ -51,17 +55,18 @@ export class SingleusergraphComponent implements OnInit {
   }
 
   setupLineChart(): void {
-    const data: any[] = [];
-    const labels: Date[] = [];
-    this.user.weights.forEach(element => {
-      data.push({
-        y: element.value
+      const data: any[] = [];
+      const labels: Date[] = [];
+      this.weights.forEach(element => {
+        data.push({
+          y: element.value
+        });
+        this.lineChartLabels = [...this.lineChartLabels, element.date.toString()];
       });
-      this.lineChartLabels = [...this.lineChartLabels, element.date.toString()];
-    });
-    this.lineChartData = [{data, label: this.user.knownAs}];
-    this.lineChartType = 'line';
-    this.lineChartLegend = true;
+      this.lineChartData = [{data, label: this.user.knownAs}];
+      this.lineChartType = 'line';
+      this.lineChartLegend = true;
+
   }
 
   // events
@@ -75,7 +80,7 @@ export class SingleusergraphComponent implements OnInit {
 
   public updateGraph(update: Weight): void {
     this.lineChartData[0].data = [...this.lineChartData[0].data, update.value];
-    this.lineChartLabels = [...this.lineChartLabels, update.date.toString()];
+    this.lineChartLabels = [...this.lineChartLabels, update.date.toDateString()];
   }
 
 }

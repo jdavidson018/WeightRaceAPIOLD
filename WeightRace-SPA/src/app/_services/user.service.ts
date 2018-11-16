@@ -21,6 +21,9 @@ export class UserService {
     return this.http.put(this.baseUrl + 'users/' + id, user, {});
   }
 
+  getWeights(id: number): Observable<Weight[]> {
+    return this.http.get<Weight[]>(this.baseUrl + 'users/' + id + '/weights/');
+  }
   addWeight(userId: number, weight: Weight) {
     return this.http.post(this.baseUrl + 'users/' + userId + '/weights/', weight);
   }

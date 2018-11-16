@@ -31,9 +31,8 @@ namespace WeightRace.API.Controllers
         public async Task<IActionResult> GetWeights(int userId)
         {
             var user = await _repo.GetUser(userId);
-
             user.Weights = user.Weights.OrderBy(d => d.Date).ToList();
-            ICollection<WeightForReturnDto> weightsToReturn = user.Weights.Select(x => _mapper.Map<WeightForReturnDto>(x)).ToList();
+            var weightsToReturn = _mapper.Map<IEnumerable<WeightForReturnDto>>(user.Weights);             
             return Ok(weightsToReturn);
         }
 
@@ -61,14 +60,10 @@ namespace WeightRace.API.Controllers
         public async Task<IActionResult> DeleteWeight(int userId, int id){
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
-            var user = await _repo.GetUser(userId);
-            if(!user.Photos.Any(p => p.Id == id))
-                return Unauthorized();
             var weightFromRepo = await _repo.GetWeight(id);
             if(weightFromRepo != null){
                 _repo.Delete(weightFromRepo);
             }
-
             if (await _repo.SaveAll())
                 return Ok();
             return BadRequest("Failed to delete the weight");
