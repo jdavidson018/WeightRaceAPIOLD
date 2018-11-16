@@ -1,0 +1,20 @@
+<table class="table">
+    <thead class="thead-dark">
+      <th scope="col">Name</th>
+      <th scope="col">Weight</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let friend of user.friends">
+        <td>
+          {{friend.knownAs}}
+        </td>
+        <td>
+          Irrelevant
+        </td>
+        <td>
+          <button class="btn btn-delete">Compare</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

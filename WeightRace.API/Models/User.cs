@@ -23,5 +23,6 @@ namespace WeightRace.API.Models
         public ICollection<Weight> Weights { get; set; }
         public double StartWeight { get; set; }
         public double GoalWeight { get; set; }
+        public ICollection<User> Friends { get; set; }
     }
 }

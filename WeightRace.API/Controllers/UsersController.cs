@@ -50,5 +50,18 @@ namespace WeightRace.API.Controllers
                 return NoContent();
              throw new Exception($"Updating user {id} failed on save");
         }
+
+        [HttpPost("{id}", Name = "AddFriend")]
+        public async Task<IActionResult> AddFriend(int id, UserForFriendDto friend){
+            var userFromRepo = await _repo.GetUser(id);
+            var friendToAdd = await _repo.GetUser(friend.Id);
+            userFromRepo.Friends.Add(friendToAdd);
+            if (await _repo.SaveAll())
+            {
+                var userToReturn = _mapper.Map<UserForDetailedDto>(friendToAdd);
+                return CreatedAtRoute("AddFriend", new{controller = "Users", id = userFromRepo.Id}, friend);
+            }
+            return BadRequest("Could not add the friend");
+        }
     }
 } 

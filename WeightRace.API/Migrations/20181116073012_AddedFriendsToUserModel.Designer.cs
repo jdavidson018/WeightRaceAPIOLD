@@ -9,14 +9,15 @@ using WeightRace.API.Data;
 namespace WeightRace.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181111215547_addGoalWeight")]
-    partial class addGoalWeight
+    [Migration("20181116073012_AddedFriendsToUserModel")]
+    partial class AddedFriendsToUserModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("WeightRace.API.Models.Photo", b =>
                 {
@@ -73,9 +74,15 @@ namespace WeightRace.API.Migrations
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<double>("StartWeight");
+
+                    b.Property<int?>("UserId");
+
                     b.Property<string>("Username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
                 });
@@ -116,6 +123,13 @@ namespace WeightRace.API.Migrations
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WeightRace.API.Models.User", b =>
+                {
+                    b.HasOne("WeightRace.API.Models.User")
+                        .WithMany("Friends")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WeightRace.API.Models.Weight", b =>

@@ -39,6 +39,7 @@ import { ProgressResolver } from './_resolvers/progress.resolver';
 import { AddweightComponent } from './userprogress/addweight/addweight.component';
 import { GraphResolver } from './_resolvers/graph.resolver';
 import { WeighttableComponent } from './userprogress/weighttable/weighttable.component';
+import { FriendtableComponent } from './userprogress/friendtable/friendtable.component';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -62,7 +63,8 @@ export function tokenGetter() {
       TimeAgoPipe,
       SingleusergraphComponent,
       AddweightComponent,
-      WeighttableComponent
+      WeighttableComponent,
+      FriendtableComponent
    ],
    imports: [
       BrowserModule,

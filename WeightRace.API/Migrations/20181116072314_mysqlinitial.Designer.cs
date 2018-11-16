@@ -9,14 +9,15 @@ using WeightRace.API.Data;
 namespace WeightRace.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181106041642_AddedPublicId")]
-    partial class AddedPublicId
+    [Migration("20181116072314_mysqlinitial")]
+    partial class mysqlinitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("WeightRace.API.Models.Photo", b =>
                 {
@@ -57,6 +58,8 @@ namespace WeightRace.API.Migrations
 
                     b.Property<string>("Gender");
 
+                    b.Property<double>("GoalWeight");
+
                     b.Property<string>("Interests");
 
                     b.Property<string>("Introduction");
@@ -70,6 +73,8 @@ namespace WeightRace.API.Migrations
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
+
+                    b.Property<double>("StartWeight");
 
                     b.Property<string>("Username");
 
@@ -90,10 +95,36 @@ namespace WeightRace.API.Migrations
                     b.ToTable("Values");
                 });
 
+            modelBuilder.Entity("WeightRace.API.Models.Weight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<double>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Weights");
+                });
+
             modelBuilder.Entity("WeightRace.API.Models.Photo", b =>
                 {
                     b.HasOne("WeightRace.API.Models.User", "User")
                         .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WeightRace.API.Models.Weight", b =>
+                {
+                    b.HasOne("WeightRace.API.Models.User", "User")
+                        .WithMany("Weights")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

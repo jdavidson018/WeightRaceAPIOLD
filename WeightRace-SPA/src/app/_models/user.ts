@@ -16,4 +16,5 @@ import { Weight } from './weight';
     lookingFor?: string;
     photos?: Photo[];
     weights?: Weight[];
+    friends?: User[];
 }
