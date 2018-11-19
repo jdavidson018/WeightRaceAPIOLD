@@ -1,0 +1,19 @@
+Building the SPA to the wwwroot folder
+	ng build
+		This command will will build the SPA and output it in the API wwwroot folder
+
+	ng build --prod
+		Actually add the production switch to the command above
+
+	ng build --prod --build-optimizer=false
+		if any problems, remove the build optimizer
+
+Publishing the API
+	dotnet publish -o C:\Demo\DAPublish
+		publish to the output file. I am familiar with this just not with the command line
+
+	$Env:ASPNETCORE_ENVIRONMENT = "Production"
+		set to production mode
+
+	iisreset
+		Run in command prompt to grab all the data n stuff

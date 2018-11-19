@@ -1,0 +1,30 @@
+{
+    "deploy": {
+      "packages": [
+        {
+          "name": "Version 1.0",
+          "description": "Weight Race Version 1.0",
+          "files": ["WeightRace.API/bin/Debug/netcoreapp2.1/publish/**"]
+        }
+      ],
+      "targets": [
+        {
+          "type": "sftp",
+          "name": "Linux",
+          "description": "Remote Linux Server",
+          "dir": "/var/weightrace",
+          "mappings": [
+              {
+                  "source": "/WeightRace.API/bin/Debug/netcoreapp2.1/publish",
+                  "target": "/"
+              }
+          ],
+          "host": "204.48.17.213",
+          "port": 22,
+          "user": "root", "password": "Nenm7252*",
+          "checkBeforeDeploy": true
+        }
+      ]
+    }
+  }
+  
