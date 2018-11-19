@@ -44,6 +44,12 @@ namespace WeightRace.API.Data
             return await _context.Users.Include(p => p.Photos).Include(w => w.Weights).ToListAsync();
         }
 
+        public async Task<IEnumerable<User>> GetUserFriends(int id)
+        {
+            var user = await _context.Users.Include(f => f.Friends).FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.Include(p => p.Photos).Include(w => w.Weights).Where(u => user.Friends.Contains(u)).ToListAsync();
+        }
+
         public async Task<IEnumerable<Weight>> GetWeights(int userId)
         {
             return await _context.Weights.ToListAsync();

@@ -4,6 +4,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { UserService } from '../../_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { AuthService } from 'src/app/_services/auth.service';
  @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
@@ -13,7 +14,8 @@ export class MemberDetailComponent implements OnInit {
   user: User;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-   constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute) { }
+   constructor(private userService: UserService, private authService: AuthService,
+    private alertify: AlertifyService, private route: ActivatedRoute) { }
    ngOnInit() {
     this.route.data.subscribe(data => {
       this.user = data['user'];
@@ -41,5 +43,12 @@ export class MemberDetailComponent implements OnInit {
       });
     }
     return imageUrls;
+  }
+  addFriend() {
+    this.userService.addFriend(this.authService.decodedToken.nameid, this.user).subscribe(() => {
+      this.alertify.success('friend was added');
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 }

@@ -20,6 +20,10 @@ namespace WeightRace.API.Dtos
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
+        [Required]
+        public double StartWeight { get; set; }
+        [Required]
+        public double GoalWeight { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public UserForRegisterDto()

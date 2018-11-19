@@ -20,7 +20,12 @@ export class UserService {
   updateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + 'users/' + id, user, {});
   }
-
+  getFriends(id: number): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users/getfriends/' + id);
+  }
+  addFriend(id: number, friend: User) {
+    return this.http.post(this.baseUrl + 'users/' + id, friend);
+  }
   getWeights(id: number): Observable<Weight[]> {
     return this.http.get<Weight[]>(this.baseUrl + 'users/' + id + '/weights/');
   }

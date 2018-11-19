@@ -40,6 +40,9 @@ import { AddweightComponent } from './userprogress/addweight/addweight.component
 import { GraphResolver } from './_resolvers/graph.resolver';
 import { WeighttableComponent } from './userprogress/weighttable/weighttable.component';
 import { FriendtableComponent } from './userprogress/friendtable/friendtable.component';
+import { FriendListResolver } from './_resolvers/friend-list.resolver';
+import { TwousergraphComponent } from './userprogress/twousergraph/twousergraph.component';
+import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -64,7 +67,8 @@ export function tokenGetter() {
       SingleusergraphComponent,
       AddweightComponent,
       WeighttableComponent,
-      FriendtableComponent
+      FriendtableComponent,
+      TwousergraphComponent
    ],
    imports: [
       BrowserModule,
@@ -97,6 +101,8 @@ export function tokenGetter() {
       MemberEditResolver,
       ProgressResolver,
       GraphResolver,
+      FriendListResolver,
+      FriendCompareResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [

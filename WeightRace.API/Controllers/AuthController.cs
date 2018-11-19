@@ -19,13 +19,15 @@ namespace WeightRace.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
+        private readonly ISingleUserRepository _userRepo;
         private readonly IConfiguration _config;        
         private readonly IMapper _mapper;
-         public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
+         public AuthController(IAuthRepository repo, ISingleUserRepository userRepo, IConfiguration config, IMapper mapper)
         {
             _config = config;
             _mapper = mapper;
             _repo = repo;
+            _userRepo = userRepo;
         }
          [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
@@ -37,6 +39,20 @@ namespace WeightRace.API.Controllers
             }
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
+
+            // add the start weight to the new users weights
+            var userFromRepo = await _userRepo.GetUser(createdUser.Id);
+            var w = new WeightForCreationDto{
+                Value = userFromRepo.StartWeight,
+                Date = DateTime.Now
+            };
+            var weight = _mapper.Map<Weight>(w);
+            userFromRepo.Weights.Add(weight);
+            if (! await _userRepo.SaveAll())
+            {
+                return BadRequest("Could not add the start weight");
+            }
+
             var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
             return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn);
         }

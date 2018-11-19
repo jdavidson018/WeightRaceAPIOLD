@@ -13,6 +13,9 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
 import { ProgressResolver } from './_resolvers/progress.resolver';
 import { GraphResolver } from './_resolvers/graph.resolver';
+import { FriendListResolver } from './_resolvers/friend-list.resolver';
+import { TwousergraphComponent } from './userprogress/twousergraph/twousergraph.component';
+import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
  export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
     {
@@ -20,12 +23,14 @@ import { GraphResolver } from './_resolvers/graph.resolver';
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-            { path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
+            { path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver, friends: FriendListResolver}},
             { path: 'members/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver}},
             { path: 'member/edit', component: MemberEditComponent,
                 resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChanges] },
             { path: 'messages', component: MessagesComponent},
             { path: 'progress', component: SingleusergraphComponent, resolve: {user: ProgressResolver, weights: GraphResolver}},
+            { path: 'progress/:id', component: TwousergraphComponent,
+                resolve: {user: ProgressResolver, weights: GraphResolver, friend: FriendCompareResolver}},
             { path: 'lists', component: ListsComponent},
         ]
     },

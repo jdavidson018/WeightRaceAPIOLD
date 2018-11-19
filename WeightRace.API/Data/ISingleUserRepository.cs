@@ -9,6 +9,7 @@ namespace WeightRace.API.Data
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
          Task<IEnumerable<User>> GetUsers();
+         Task<IEnumerable<User>> GetUserFriends(int id);
          Task<IEnumerable<Weight>> GetWeights(int userId);
          Task<Weight> GetWeight(int id);
          Task<User> GetUser(int id);

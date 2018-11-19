@@ -19,9 +19,13 @@ namespace WeightRace.API.Controllers
     {
         private readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
-         public UsersController(IDatingRepository repo, IMapper mapper)
+
+        private readonly ISingleUserRepository _userRepo;
+
+        public UsersController(IDatingRepository repo, ISingleUserRepository userRepo, IMapper mapper)
         {
             _repo = repo;
+            _userRepo = userRepo;
             _mapper = mapper;
         }
          [HttpGet]
@@ -62,6 +66,13 @@ namespace WeightRace.API.Controllers
                 return CreatedAtRoute("AddFriend", new{controller = "Users", id = userFromRepo.Id}, friend);
             }
             return BadRequest("Could not add the friend");
+        }
+
+        [HttpGet("GetFriends/{id}", Name = "GetFriends")]
+        public async Task<IActionResult> GetFriends(int id){
+            var friends = await _userRepo.GetUserFriends(id);
+            var friendsToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(friends);
+            return Ok(friendsToReturn);
         }
     }
 } 
