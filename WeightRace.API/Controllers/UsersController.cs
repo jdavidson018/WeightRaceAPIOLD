@@ -19,9 +19,13 @@ namespace WeightRace.API.Controllers
     {
         private readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
-         public UsersController(IDatingRepository repo, IMapper mapper)
+
+        private readonly ISingleUserRepository _userRepo;
+
+        public UsersController(IDatingRepository repo, ISingleUserRepository userRepo, IMapper mapper)
         {
             _repo = repo;
+            _userRepo = userRepo;
             _mapper = mapper;
         }
          [HttpGet]
@@ -49,6 +53,26 @@ namespace WeightRace.API.Controllers
              if (await _repo.SaveAll())
                 return NoContent();
              throw new Exception($"Updating user {id} failed on save");
+        }
+
+        [HttpPost("{id}", Name = "AddFriend")]
+        public async Task<IActionResult> AddFriend(int id, UserForFriendDto friend){
+            var userFromRepo = await _repo.GetUser(id);
+            var friendToAdd = await _repo.GetUser(friend.Id);
+            userFromRepo.Friends.Add(friendToAdd);
+            if (await _repo.SaveAll())
+            {
+                var userToReturn = _mapper.Map<UserForDetailedDto>(friendToAdd);
+                return CreatedAtRoute("AddFriend", new{controller = "Users", id = userFromRepo.Id}, friend);
+            }
+            return BadRequest("Could not add the friend");
+        }
+
+        [HttpGet("GetFriends/{id}", Name = "GetFriends")]
+        public async Task<IActionResult> GetFriends(int id){
+            var friends = await _userRepo.GetUserFriends(id);
+            var friendsToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(friends);
+            return Ok(friendsToReturn);
         }
     }
 } 

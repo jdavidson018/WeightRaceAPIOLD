@@ -56,6 +56,8 @@ namespace WeightRace.API.Migrations
 
                     b.Property<string>("Gender");
 
+                    b.Property<double>("GoalWeight");
+
                     b.Property<string>("Interests");
 
                     b.Property<string>("Introduction");
@@ -70,9 +72,15 @@ namespace WeightRace.API.Migrations
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<double>("StartWeight");
+
+                    b.Property<int?>("UserId");
+
                     b.Property<string>("Username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
                 });
@@ -89,10 +97,43 @@ namespace WeightRace.API.Migrations
                     b.ToTable("Values");
                 });
 
+            modelBuilder.Entity("WeightRace.API.Models.Weight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<double>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Weights");
+                });
+
             modelBuilder.Entity("WeightRace.API.Models.Photo", b =>
                 {
                     b.HasOne("WeightRace.API.Models.User", "User")
                         .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WeightRace.API.Models.User", b =>
+                {
+                    b.HasOne("WeightRace.API.Models.User")
+                        .WithMany("Friends")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WeightRace.API.Models.Weight", b =>
+                {
+                    b.HasOne("WeightRace.API.Models.User", "User")
+                        .WithMany("Weights")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -35,11 +35,10 @@ namespace DatingApp.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(x => x.
-                UseMySql(Configuration.GetConnectionString("DefaultConnection"))
-                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.IncludeIgnoredWarning)));
+            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -50,6 +49,7 @@ namespace DatingApp.API
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
+            services.AddScoped<ISingleUserRepository, SingleUserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters{
@@ -61,31 +61,31 @@ namespace DatingApp.API
                 });
             services.AddScoped<LogUserActivity>();
         }
-
-        public void ConfigureDevelopmentServices(IServiceCollection services)
-        {
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opt => {
-                    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                });
-            services.AddCors();
-            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
-            services.AddAutoMapper();
-            services.AddTransient<Seed>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IDatingRepository, DatingRepository>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
-                    options.TokenValidationParameters = new TokenValidationParameters{
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };    
-                });
-            services.AddScoped<LogUserActivity>();
-        }
+        // public void ConfigureDevelopmentServices(IServiceCollection services)
+        // {
+        //     services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+        //     services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+        //         .AddJsonOptions(opt => {
+        //             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        //         });
+        //     services.AddCors();
+        //     services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+        //     services.AddAutoMapper();
+        //     services.AddTransient<Seed>();
+        //     services.AddScoped<IAuthRepository, AuthRepository>();
+        //     services.AddScoped<IDatingRepository, DatingRepository>();
+        //     services.AddScoped<ISingleUserRepository, SingleUserRepository>();
+        //     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        //         .AddJwtBearer(options => {
+        //             options.TokenValidationParameters = new TokenValidationParameters{
+        //                 ValidateIssuerSigningKey = true,
+        //                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+        //                 ValidateIssuer = false,
+        //                 ValidateAudience = false
+        //             };    
+        //         });
+        //     services.AddScoped<LogUserActivity>();
+        // }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)

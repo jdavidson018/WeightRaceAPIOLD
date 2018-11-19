@@ -1,0 +1,27 @@
+IP Address: http://204.48.17.213/
+
+Making new application
+	mkdir testapp
+	cd testapp/
+	dotnet new mvc
+	dotnet publish
+
+	sudo cp -a ~/testapp/bin/Debug/netcoreapp2.1/publish/ /var/testapp/
+
+	sudo nano /etc/systemd/system/kestrel-web.service
+
+	sudo systemctl enable kestrel-web.service
+
+Scripting Database
+	dotnet ef migrations script -o mysql.sql
+
+Publishing
+	$Env:ASPNETCORE_ENVIRONMENT = "Production"
+	dotnet publish
+
+Deploying:
+	control shift p, deploy
+
+On linux server:
+	sudo systemctl enable kestrel-web.service
+	sudo systemctl restart kestrel-web.service

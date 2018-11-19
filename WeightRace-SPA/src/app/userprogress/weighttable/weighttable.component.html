@@ -1,0 +1,20 @@
+<table class="table">
+  <thead class="thead-dark">
+    <th scope="col">Date</th>
+    <th scope="col">Weight</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let weight of weights">
+      <td>
+        {{weight.date | date: 'mediumDate'}}
+      </td>
+      <td>
+        {{weight.value}}
+      </td>
+      <td>
+        <button class="btn btn-delete" (click)="delete(weight)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

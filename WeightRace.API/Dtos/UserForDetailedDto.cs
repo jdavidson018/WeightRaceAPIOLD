@@ -20,5 +20,7 @@ namespace WeightRace.API.Dtos
         public string Country { get; set; }
         public string PhotoUrl { get; set; }
         public ICollection<PhotosForDetailedDto> Photos  { get; set; }
+        public ICollection<WeightForReturnDto> Weights { get; set; }
+        public ICollection<UserForDetailedDto> Friends { get; set; }
     }
 } 

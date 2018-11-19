@@ -30,6 +30,8 @@ export class RegisterComponent implements OnInit {
       gender: ['male'],
       username: ['', Validators.required],
       knownAs: ['', Validators.required],
+      startweight: ['', Validators.required],
+      goalweight: ['', Validators.required],
       dateOfBirth: [null, Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
@@ -58,6 +60,6 @@ export class RegisterComponent implements OnInit {
     }
   }
    cancel() {
-    this.cancelRegister.emit(false);
+    this.cancelRegister.emit(this.user);
   }
 }

@@ -20,5 +20,9 @@ namespace WeightRace.API.Models
         public String City { get; set; }
         public string Country { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Weight> Weights { get; set; }
+        public double StartWeight { get; set; }
+        public double GoalWeight { get; set; }
+        public ICollection<User> Friends { get; set; }
     }
 }

@@ -33,6 +33,16 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
+// import { WeightsComponent } from './weights/weights.component';
+import { SingleusergraphComponent } from './userprogress/singleusergraph/singleusergraph.component';
+import { ProgressResolver } from './_resolvers/progress.resolver';
+import { AddweightComponent } from './userprogress/addweight/addweight.component';
+import { GraphResolver } from './_resolvers/graph.resolver';
+import { WeighttableComponent } from './userprogress/weighttable/weighttable.component';
+import { FriendtableComponent } from './userprogress/friendtable/friendtable.component';
+import { FriendListResolver } from './_resolvers/friend-list.resolver';
+import { TwousergraphComponent } from './userprogress/twousergraph/twousergraph.component';
+import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -53,7 +63,12 @@ export function tokenGetter() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      SingleusergraphComponent,
+      AddweightComponent,
+      WeighttableComponent,
+      FriendtableComponent,
+      TwousergraphComponent
    ],
    imports: [
       BrowserModule,
@@ -68,13 +83,13 @@ export function tokenGetter() {
       NgxGalleryModule,
       FileUploadModule,
       JwtModule.forRoot({
-          config: {
-              tokenGetter: tokenGetter,
-              whitelistedDomains: ['localhost:5000'],
-              blacklistedRoutes: ['localhost:5000/api/auth']
-          }
-      })
-   ],
+        config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth']
+        }
+        })
+    ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,
@@ -84,6 +99,10 @@ export function tokenGetter() {
       MemberDetailResolver,
       MemberListResolver,
       MemberEditResolver,
+      ProgressResolver,
+      GraphResolver,
+      FriendListResolver,
+      FriendCompareResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [
