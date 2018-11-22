@@ -23,16 +23,22 @@ export class SingleusergraphComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
   public lineChartOptions: any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      xAxes: [{
+        id: 'user-x-axis',
+        type: 'time',
+        time: {
+          unit: 'day'
+        }
+      }]
+    }
   };
 
-  public lineChartLabels: any[] = [];
   public lineChartType = 'line';
   public lineChartLegend = true;
 
-  public lineChartData: any[] = [
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'this.user.knownAs'}
-  ];
+  public lineChartData: any[] = [];
   constructor(private route: ActivatedRoute, private alertify: AlertifyService,
     private userService: UserService, private authService: AuthService, private fb: FormBuilder) { }
 
@@ -56,14 +62,13 @@ export class SingleusergraphComponent implements OnInit {
 
   setupLineChart(): void {
       const data: any[] = [];
-      const labels: Date[] = [];
       this.weights.forEach(element => {
         data.push({
+          t: element.date,
           y: element.value
         });
-        this.lineChartLabels = [...this.lineChartLabels, element.date.toString()];
       });
-      this.lineChartData = [{data, label: this.user.knownAs}];
+      this.lineChartData = [{data: data, label: this.user.knownAs, xAxisId: 'user-x-axis'}];
       this.lineChartType = 'line';
       this.lineChartLegend = true;
 

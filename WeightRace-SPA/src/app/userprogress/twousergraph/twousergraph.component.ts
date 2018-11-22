@@ -30,18 +30,7 @@ export class TwousergraphComponent implements OnInit {
   public lineChartType = 'line';
   public lineChartLegend = true;
 
-  public lineChartData: any[] = [
-    {
-    //   data: [{t: new Date('2015-03-4'), y: 29}, {t: new Date('2015-03-5'), y: 31}, {t: new Date('2015-03-6'), y: 33},
-    //      {t: new Date('2015-03-7'), y: 35}, {t: new Date('2015-03-8'), y: 37}, {t: new Date('2015-03-9'), y: 39}],
-    //   label: 'this.user.knownAs',
-    //   xAxisId: 'user-x-axis'
-    // }, {
-    //   data:  [{t: new Date('2015-03-1'), y: 28}, {t: new Date('2015-03-5'), y: 28}, {t: new Date('2015-03-6'), y: 28},
-    //      {t: new Date('2015-03-7'), y: 36}, {t: new Date('2015-03-8'), y: 28}, {t: new Date('2015-03-9'), y: 28}],
-    //   label: 'your friend',
-    //   xAxisId: 'user-x-axis'
-    }];
+  public lineChartData: any[] = [];
   constructor(private route: ActivatedRoute, private alertify: AlertifyService,
     private userService: UserService, private authService: AuthService) { }
 

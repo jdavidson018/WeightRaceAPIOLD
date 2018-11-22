@@ -43,6 +43,7 @@ import { FriendtableComponent } from './userprogress/friendtable/friendtable.com
 import { FriendListResolver } from './_resolvers/friend-list.resolver';
 import { TwousergraphComponent } from './userprogress/twousergraph/twousergraph.component';
 import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
+import { DashboardComponent } from './userprogress/dashboard/dashboard.component';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -68,7 +69,8 @@ export function tokenGetter() {
       AddweightComponent,
       WeighttableComponent,
       FriendtableComponent,
-      TwousergraphComponent
+      TwousergraphComponent,
+      DashboardComponent
    ],
    imports: [
       BrowserModule,

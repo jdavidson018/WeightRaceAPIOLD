@@ -16,6 +16,7 @@ import { GraphResolver } from './_resolvers/graph.resolver';
 import { FriendListResolver } from './_resolvers/friend-list.resolver';
 import { TwousergraphComponent } from './userprogress/twousergraph/twousergraph.component';
 import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
+import { DashboardComponent } from './userprogress/dashboard/dashboard.component';
  export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
     {
@@ -32,6 +33,7 @@ import { FriendCompareResolver } from './_resolvers/friend-compare.resolver';
             { path: 'progress/:id', component: TwousergraphComponent,
                 resolve: {user: ProgressResolver, weights: GraphResolver, friend: FriendCompareResolver}},
             { path: 'lists', component: ListsComponent},
+            { path: 'dashboard', component: DashboardComponent}
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full'},
