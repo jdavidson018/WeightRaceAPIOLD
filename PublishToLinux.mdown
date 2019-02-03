@@ -1,4 +1,4 @@
-IP Address: http://204.48.17.213/
+Live IP Address: http://204.48.17.213/
 
 Making new application
 	mkdir testapp

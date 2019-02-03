@@ -85,7 +85,6 @@ export class SingleusergraphComponent implements OnInit {
 
   public updateGraph(update: Weight): void {
     this.lineChartData[0].data = [...this.lineChartData[0].data, update.value];
-    this.lineChartLabels = [...this.lineChartLabels, update.date.toDateString()];
   }
 
 }
